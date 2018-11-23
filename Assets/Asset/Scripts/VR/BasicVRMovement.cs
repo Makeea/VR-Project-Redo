@@ -10,9 +10,10 @@ namespace PixelCrushers.DialogueSystem.Demo
     {
         public float speed = 2;
         public float mouseXSensitivity = 5;
-
+        public float mouseYSensitivity = -5;
         private Transform myCameraTransform;
         private bool isInConversation = false;
+        
 
         private void Awake()
         {
@@ -21,9 +22,19 @@ namespace PixelCrushers.DialogueSystem.Demo
 
         private void Update()
         {
-            if (isInConversation) return;
+            //if (isInConversation) return;
             transform.Translate(new Vector3(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0, Input.GetAxis("Vertical") * speed * Time.deltaTime));
+            if (Input.GetKey(KeyCode.Space))
+            {
+                transform.Translate(Vector3.up * speed * Time.deltaTime);
+            }
+            else if(Input.GetKey(KeyCode.LeftShift))
+            {
+                transform.Translate(Vector3.down * speed * Time.deltaTime);
+            }
+
             transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X") * mouseXSensitivity, 0));
+            myCameraTransform.Rotate(new Vector3(Input.GetAxis("Mouse Y") * mouseYSensitivity, 0, 0));
         }
 
         private void OnConversationStart(Transform actor)
@@ -35,5 +46,12 @@ namespace PixelCrushers.DialogueSystem.Demo
         {
             isInConversation = false;
         }
+        private void Start()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = false;
+        }
     }
 }
+
