@@ -11,7 +11,7 @@ namespace PixelCrushers.DialogueSystem.Demo
         public float speed = 2;
         public float mouseXSensitivity = 5;
         public float mouseYSensitivity = -5;
-        private Transform myCameraTransform;
+        public Transform myCameraTransform;
         private bool isInConversation = false;
         
 

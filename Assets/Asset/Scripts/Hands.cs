@@ -1,0 +1,78 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Hands : MonoBehaviour {
+
+    private GameObject colldingObject;
+    private GameObject heldObject;
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.GetComponent<Rigidbody>())
+        {
+            colldingObject = other.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        colldingObject = null;
+    }
+
+
+
+
+    public bool isLeftHand;
+    private string grip;
+    private bool gripHeld;
+
+
+    // Use this for initialization
+    void Start ()
+    {
+        if (isLeftHand)
+        {
+            grip = "HTC_VIU_LeftGrip";
+        }
+        else
+        {
+            grip = "HTC_VIU_RightGrip";
+        }
+	}
+    
+
+	// Update is called once per frame
+	void Update ()
+    {
+        if(gripHeld == false && Input.GetAxis(grip) > 0.5f)
+        {
+            Grab();
+            gripHeld = true;
+        }
+		else if(gripHeld = true & Input.GetAxis(grip) < 0.5f)
+        {
+            Release();
+        }
+	}
+
+    void Grab()
+    {
+        heldObject = colldingObject;
+        FixedJoint fx = this.gameObject.AddComponent<FixedJoint>();
+        fx.connectedBody = heldObject.GetComponent<Rigidbody>();
+        fx.breakTorque = 1500f;
+        fx.breakForce = 1500f;
+    }
+
+    void Release()
+    {
+        if (GetComponent<FixedJoint>())
+        {
+            Destroy(GetComponent<FixedJoint>());
+        }
+
+        heldObject = null;
+    }
+
+}
