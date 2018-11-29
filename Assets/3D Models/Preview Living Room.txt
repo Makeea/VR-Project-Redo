@@ -1,0 +1,17 @@
+Preview Livingroom
+
+Made in 3ds Max 2015 by Andrej Persolja
+
+Serves as a preview model for my other 3d interior models.
+The model gives you a good preview of how my other models are made as of November 2015.
+
+Rendered with Vray 3.
+using photorealistic materials, textures and lightning.
+Number of Polys: 458.917
+Number of Verts: 434.826
+
+The model is free for non-commercial use.
+For commercial use, please contact me.
+
+Created by Andrej Persolja
+About.me/Perso89
