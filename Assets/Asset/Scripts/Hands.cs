@@ -40,19 +40,36 @@ public class Hands : MonoBehaviour {
             grip = "HTC_VIU_RightGrip";
         }
 	}
-    
 
-	// Update is called once per frame
-	void Update ()
+    private Vector3 oldPos;
+    private Vector3 handVelcity;
+    public float handVelocityfudgefactor = 25f;
+
+    private Vector3 oldRot;
+    private Vector3 handSpin;
+    public float handSpinfudgefactor = 25f;
+    // Update is called once per frame
+    void Update ()
     {
-        if(gripHeld == false && Input.GetAxis(grip) > 0.5f)
+        handVelcity = (this.transform.position - oldPos) * handVelocityfudgefactor;
+        oldPos = this.transform.position;
+
+        handSpin = (this.transform.eulerAngles - oldRot) * handSpinfudgefactor;
+        oldRot = this.transform.eulerAngles;
+
+        if (gripHeld == false && Input.GetAxis(grip) > 0.5f)
         {
-            Grab();
+            if (colldingObject)
+            {
+                Grab();
+            }
+
             gripHeld = true;
         }
-		else if(gripHeld = true & Input.GetAxis(grip) < 0.5f)
+		else if(gripHeld == true && Input.GetAxis(grip) < 0.5f)
         {
             Release();
+            gripHeld = false;
         }
 	}
 
@@ -69,7 +86,13 @@ public class Hands : MonoBehaviour {
     {
         if (GetComponent<FixedJoint>())
         {
+            //Debug.Log("Destroying FixedJoint: "+ Time.time);
+
             Destroy(GetComponent<FixedJoint>());
+            heldObject.GetComponent<Rigidbody>().velocity = handVelcity;
+            heldObject.GetComponent<Rigidbody>().angularVelocity = handSpin;
+
+            //Debug.Log("Destroyed FixedJoint: " + Time.time);
         }
 
         heldObject = null;
