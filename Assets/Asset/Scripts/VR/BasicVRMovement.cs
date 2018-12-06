@@ -22,8 +22,13 @@ namespace PixelCrushers.DialogueSystem.Demo
 
         private void Update()
         {
-            //if (isInConversation) return;
-            transform.Translate(new Vector3(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0, Input.GetAxis("Vertical") * speed * Time.deltaTime));
+
+            if (Input.GetKey(KeyCode.JoystickButton8) || Input.GetKey(KeyCode.JoystickButton9))
+            {
+                return;
+            }
+                //if (isInConversation) return;
+                transform.Translate(new Vector3(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0, Input.GetAxis("Vertical") * speed * Time.deltaTime));
             if (Input.GetKey(KeyCode.Space))
             {
                 transform.Translate(Vector3.up * speed * Time.deltaTime);

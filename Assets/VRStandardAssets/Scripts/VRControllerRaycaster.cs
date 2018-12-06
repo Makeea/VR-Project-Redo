@@ -53,7 +53,11 @@ namespace VRStandardAssets.Utils
 
         private void Update()
         {
-            EyeRaycast();
+            if (!Input.GetKey(KeyCode.JoystickButton8) && !Input.GetKey(KeyCode.JoystickButton9))
+            {
+                EyeRaycast();
+                Debug.Log("Passing Joystick Test");
+            }
         }
 
       

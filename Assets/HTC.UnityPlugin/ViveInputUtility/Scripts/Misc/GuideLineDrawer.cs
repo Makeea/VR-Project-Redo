@@ -13,6 +13,7 @@ public class GuideLineDrawer : MonoBehaviour
 
     public Pointer3DRaycaster raycaster;
     public LineRenderer lineRenderer;
+    public bool isInteractivePoninter;
 
 #if UNITY_EDITOR
     protected virtual void Reset()
@@ -37,6 +38,16 @@ public class GuideLineDrawer : MonoBehaviour
 #endif
     protected virtual void LateUpdate()
     {
+        if ((Input.GetKey(KeyCode.JoystickButton8) || Input.GetKey(KeyCode.JoystickButton9)) && isInteractivePoninter)
+        {
+          Debug.Log("Returning");
+            lineRenderer.enabled = false;
+            return;
+        }
+
+
+
+
         var result = raycaster.FirstRaycastResult();
         if (showOnHitOnly && !result.isValid)
         {
